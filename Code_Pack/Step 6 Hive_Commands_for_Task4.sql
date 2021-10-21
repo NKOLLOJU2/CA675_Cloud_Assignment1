@@ -16,7 +16,7 @@ CREATE TEMPORARY MACRO max2(x INT, y INT) if(x>y,x,y);
 CREATE TEMPORARY MACRO tfidf(tf FLOAT, df_t INT, n_docs INT) tf * (log(10, CAST(n_docs as FLOAT)/max2(1,df_t)) + 1.0);
  
 --To Top 10 users sorted by their score
-CREATE TABLE cloudtechdb.task4_top10_tb1 AS SELECT OwnerUserId, Body, Score FROM cloudtechdb.poststb ORDER BY Score DESC LIMIT 10;
+CREATE TABLE cloudtechdb.task4_top10_tb1 AS SELECT OwnerUserId, Body, Score FROM cloudtechdb.top2gpoststb ORDER BY Score DESC LIMIT 10;
  
 --To store the OwnerUserId and Body from the previous table.
 CREATE TABLE cloudtechdb.task4_top10_tb2 AS SELECT OwnerUserId, Body FROM cloudtechdb.task4_top10_tb1;
