@@ -11,11 +11,11 @@
 	
 --3. Filtering NULL data out of the variable and storing into a new one.
 	
-	filtered_data = FILTER TopTwoHGrandPosts BY (Id IS NOT NULL) AND (OwnerUserId IS NOT NULL) AND (Score IS NOT NULL);	
+	filtered_data = FILTER TopTwoHGrandPosts BY (OwnerUserId IS NOT NULL) AND (Id IS NOT NULL);	
 	
 --4. Removing unwanted characters from the columns and storing the variable into a new one.
 
-	clean_data = FOREACH filtered_data GENERATE (REPLACE(REPLACE(Body, '\n',' '), '([^a-zA-Z0-9\\s]+)',' '), Score, Id, ViewCount, OwnerUserId, OwnerDisplayName, REPLACE(REPLACE(Title,',',''), '\n', ' '), REPLACE(REPLACE(Tags,',',''), '\n', ' '));
+	clean_data = FOREACH filtered_data GENERATE (OwnerUserId, Score, ViewCount, Id, OwnerDisplayName, REPLACE(REPLACE(Title,',',''), '\n', ' '), REPLACE(REPLACE(Body, '\n',' '), '([^a-zA-Z0-9\\s]+)',' '), REPLACE(REPLACE(Tags,',',''), '\n', ' '));
 
 --5. Move the cleaned data file into a new cluster folder
 	
