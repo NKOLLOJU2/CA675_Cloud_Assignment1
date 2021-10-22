@@ -100,19 +100,22 @@ After loading Pig in local mode in GCP Hadoop, I ran the below grunt commands li
 ```
 	grunt> STORE clean_data INTO 'hdfs://cluster-0489-nikhil-m/FinalCleanedData' USING PigStorage(',');	
  ```
-![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Table_Load.PNG)
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Pig_5.PNG)
+
 ## 4. Database and Table Creation with Hive:
 Hive is closely integrated with Hadoop and is available as an add-on in GCP Hadoop. Hive allows us to read, write and manage large amounts of data using HQL or Hive-QL which is similar to SQL. By using the below commands I was able to create a database and a table to store the cleaned data from Pig.
 ```
 hive> CREATE DATABASE IF NOT EXISTS cloudtechdb;
 ```
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Table.PNG)
 ```
 hive> CREATE TABLE cloudtechdb.top2gpoststb (Id int,PostTypeId int,AcceptedAnswerId int,ParentId int,CreationDate timestamp,DeletionDate timestamp,Score int,ViewCount int,Body string,OwnerUserId int,OwnerDisplayName string,LastEditorUserId int,LastEditorDisplayName string,LastEditDate timestamp,LastActivityDate timestamp,Title string,Tags string,AnswerCount int,CommentCount int,FavoriteCount int,ClosedDate timestamp,CommunityOwnedDate timestamp,ContentLicense string) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
 ```
 ```
 hive> LOAD DATA INPATH 'hdfs://cluster-0489-nikhil-m/FinalCleanedData' INTO TABLE cloudtechdb.top2gpoststb;
 ```
-![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Table.PNG)
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Table_Load.PNG)
+
 ## 5.Querying data for Task 3 with Hive:
 After the cleaned data is loaded into Hive table as above, the below queries are run to get the result to fetch the data.
 (i)	The top 10 posts by score:
