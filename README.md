@@ -22,7 +22,7 @@ Steps for Task completion:
 5.	Running the queries to analyse table data for Task 3 using HIVE
 6.	Run Query to find TF-IDF for Task 4 using HIVE
 
-![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/PrcoessFlow.PNG)
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/PrcoessFlow2.PNG)
 
 ## 1. Data Extraction from Stack Exchange:
 
