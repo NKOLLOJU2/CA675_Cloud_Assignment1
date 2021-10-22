@@ -35,3 +35,5 @@ CREATE OR REPLACE VIEW cloudtechdb.task4_tfidf_vw AS SELECT tf.OwnerUserId, tf.w
 
 --Calculate the per-user TF-IDF of the top 10 terms for each of the top 10 users
 SELECT OwnerUserId ,word, tfidf, rank FROM ( SELECT  OwnerUserId ,word, tfidf, rank() over (PARTITION BY OwnerUserId ORDER BY tfidf DESC) as rank FROM cloudtechdb.task4_tfidf_vw  ) A  WHERE rank <= 10;
+
+SELECT OwnerUserId ,word, tfidf, rank FROM ( SELECT  OwnerUserId ,word, tfidf, ROW_NUMBER() over (PARTITION BY OwnerUserId ORDER BY tfidf DESC) as rank FROM cloudtechdb.task4_tfidf_vw  ) A  WHERE rank <= 10;
