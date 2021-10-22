@@ -1,4 +1,4 @@
-Stack Overflow Posts Data Analysis
+#Stack Overflow Posts Data Analysis
 
 The Assignment is to use Cloud Technologies and perform Data Analysis on Stack Overflow posts data. This assignment has 4 tasks described as follows:
 Task 1: Fetch top 200,000 posts from Stack Exchange sorted by View Count.
@@ -113,20 +113,28 @@ SELECT A.OwnerUserId ,A.de_word, A.wf_tfidf, A.rank FROM ( SELECT  OwnerUserId ,
    
 
 References:
+
 [a]CSVExcelStorage
 https://pig.apache.org/docs/r0.17.0/api/org/apache/pig/piggybank/storage/CSVExcelStorage.html
+
 [b]TF-IDF
 https://www.kdnuggets.com/2018/08/wtf-tf-idf.html
+
 [c]TF-IDF Term Weighting
 https://hivemall.incubator.apache.org/userguide/ft_engineering/tfidf.html.
+
 [d]Hivemall User Manual
 https://hivemall.incubator.apache.org/userguide/getting_started/installation.html
+
 [e]Website to download csv files from Stack Exchange: 
 https://data.stackexchange.com/stackoverflow/query/new
+
 [f]To download and install hivemall and define-all.hive:
 https://search.maven.org/search?q=a:hivemall-all
 https://github.com/apache/incubator-hivemall/blob/master/resources/ddl/define-all.hive
+
 [g]ROW_NUMBER() function: 
 https://www.sqlservertutorial.net/sql-server-window-functions/sql-server-row_number-function/
+
 [h]TF-IDF Calculation:
 https://github.com/daijyc/hivemall/wiki/TFIDF-calculation
