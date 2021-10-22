@@ -1,6 +1,10 @@
-Move the files uploaded to GCP Data Proc master cluster to HDFS
+--Create a New Directory in hdfs
+	
+	hdfs dfs -mkdir /ExtractedData
+	
+--Move the files uploaded to GCP Data Proc master cluster to HDFS directory ExtractedData/
 
-	hdfs dfs -put /home/nikhil_kolloju2/FirstTierViewResults.csv /
-	hdfs dfs -put /home/nikhil_kolloju2/SecondTierViewResults.csv /
-	hdfs dfs -put /home/nikhil_kolloju2/ThirdTierViewResults.csv /
-	hdfs dfs -put /home/nikhil_kolloju2/FourthTierViewResults.csv /
+	hdfs dfs -put /home/nikhil_kolloju2/ExtractedData/FirstTierViewResults.csv /ExtractedData/
+	hdfs dfs -put /home/nikhil_kolloju2/ExtractedData/SecondTierViewResults.csv /ExtractedData/
+	hdfs dfs -put /home/nikhil_kolloju2/ExtractedData/ThirdTierViewResults.csv /ExtractedData/
+	hdfs dfs -put /home/nikhil_kolloju2/ExtractedData/FourthTierViewResults.csv /ExtractedData/
