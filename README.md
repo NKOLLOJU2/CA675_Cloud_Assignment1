@@ -1,7 +1,7 @@
 # CA675_Cloud_Assignment1                                                                                                                             Nikhil Kolloju
 Requirement:
 
-The Assignment is to use Cloud Technologies and perform Data Analysis on Stack Exchange posts data. This assignment has 4 tasks described as follows:
+The Assignment is to use Cloud Technologies and perform Data Analysis on Stack Overflow posts data. This assignment has 4 tasks described as follows:
 
 Task 1: Fetch top 200,000 posts from Stack Exchange sorted by View Count.
 
