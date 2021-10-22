@@ -1,4 +1,4 @@
-#Stack Overflow Posts Data Analysis
+## Stack Overflow Posts Data Analysis
 
 The Assignment is to use Cloud Technologies and perform Data Analysis on Stack Overflow posts data. This assignment has 4 tasks described as follows:
 Task 1: Fetch top 200,000 posts from Stack Exchange sorted by View Count.
@@ -17,7 +17,7 @@ Steps for Task completion:
 5.	Running the queries to analyse table data for Task 3 using HIVE
 6.	Run Query to find TF-IDF for Task 4 using HIVE
  
-1. Data Extraction from Stack Exchange:
+## 1. Data Extraction from Stack Exchange:
 
 The website uses SQL language to run the desired queries on the available tables. Since the maximum limit a query can fetch on the website is only 50,000 records, I have written multiple queries with different ranges to fetch data with 50,000 records each run and with 4 such iterations I was be able to download the top 200,000 records in csv format with 50,000 records in each csv file. The runtime to rank all the records in the Posts table was too long and would timeout, so it was important to filter out the data first and then rank. I first selected data from Posts table with ViewCount greater than 35,000. It amounted to more than 200,000 records and so I ranked this data using ROW_NUMBER() [g] based on descending ViewCount. From the ranked data, I got the first 50,000 posts using a nested query. Similar approach has been done to next set of queries with the rank ranging from 50,001 to 100,000 and 100,001 to 150,000 and 150,001 to 200,000. A few records have been removed to avoid duplicate records in the data extraction. Fetched data has been downloaded into 4 CSV files.
 Below are the set of queries used:
@@ -53,7 +53,7 @@ WHERE A.rank BETWEEN 150001 AND 200000
 AND A.Id NOT IN (8733179,54444538,9587907) --to remove duplicate records
 ORDER BY A.rank ASC;
 
-2. Uploading the CSV files to HDFS:
+## 2. Uploading the CSV files to HDFS:
 I created a Master-Worker Cluster in Google Cloud Platform and with the Master Node SSH, I was able to upload the csv files from my local machine to cluster directory using the settings > upload file option on the SSH window. Once the files are uploaded, I used the below commands to run in the CLI to move the files from my cluster to HDFS directory.
 
 --Create a New Directory in hdfs
@@ -67,7 +67,7 @@ I created a Master-Worker Cluster in Google Cloud Platform and with the Master N
 	hdfs dfs -put /home/nikhil_kolloju2/ExtractedData/ThirdTierViewResults.csv /ExtractedData/
 	hdfs dfs -put /home/nikhil_kolloju2/ExtractedData/FourthTierViewResults.csv /ExtractedData/
  
-3. Data Cleaning with Pig:
+## 3. Data Cleaning with Pig:
 Pig is available as one of the add-ons in the Hadoop network. I chose Pig to perform data cleaning because it is much simpler to do the aforementioned task without having to write complex Java programs with mapper and reducer classes.
 After loading Pig in local mode in GCP Hadoop, I ran the below grunt commands like LOAD & CSVExcelStorage [a] to load the csv data into local variables and UNION to combine all the data into one variable for easier reference. I then filtered out all the records that didn’t have any OwnerUserId and Id. After cleaning the Title, Body, Tags, OwnerDisplayName, OwnerUserId, ViewCount, Id and Score for unwanted characters, the cleaned data is then loaded into a file in HDFS using PigStorage.
 
@@ -87,7 +87,7 @@ After loading Pig in local mode in GCP Hadoop, I ran the below grunt commands li
 
 	grunt> STORE clean_data INTO 'hdfs://cluster-0489-nikhil-m/FinalCleanedData' USING PigStorage(',');	
  
-4. Database and Table Creation with Hive:
+## 4. Database and Table Creation with Hive:
 Hive is closely integrated with Hadoop and is available as an add-on in GCP Hadoop. Hive allows us to read, write and manage large amounts of data using HQL or Hive-QL which is similar to SQL. By using the below commands I was able to create a database and a table to store the cleaned data from Pig.
 
 hive> CREATE DATABASE IF NOT EXISTS cloudtechdb;
@@ -96,7 +96,7 @@ hive> CREATE TABLE cloudtechdb.top2gpoststb (Id int,PostTypeId int,AcceptedAnswe
 
 hive> LOAD DATA INPATH 'hdfs://cluster-0489-nikhil-m/FinalCleanedData' INTO TABLE cloudtechdb.top2gpoststb;
 
-5.Querying data for Task 3 with Hive:
+## 5.Querying data for Task 3 with Hive:
 After the cleaned data is loaded into Hive table as above, the below queries are run to get the result to fetch the data.
 (i)	The top 10 posts by score:
 
@@ -110,7 +110,7 @@ hive> SELECT OwnerUserId AS Owner, SUM(Score) AS Grand_Score FROM cloudtechdb.to
 
 hive> SELECT COUNT(DISTINCT OwnerUserId) AS Owner_Count FROM cloudtechdb.top2gpoststb WHERE (UPPER(Title) LIKE '%CLOUD%' OR UPPER(body) LIKE '%CLOUD%' OR UPPER(Tags) LIKE '%CLOUD%');
  
-6. Calculating TF-IDF for Task 4 with Hive:
+## 6. Calculating TF-IDF for Task 4 with Hive:
 
 TF-IDF [b], which stands for term frequency — inverse document frequency and is intended to reflect how relevant a term is in a given document. A set of pre-requisites need to be in place before we can actually get to the task. First of which is to add Hivemall [c][d] as we will be using it to detach each word in the ‘Body’ column. Once I have downloaded the hivemall jar file and the define-all.hive file, I uploaded them using the same navigation Settings > Upload File to upload 2 files into GCP Master Cluster Node. I then ran the below commands to add hivemall to hive and set the source.
 
