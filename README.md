@@ -100,6 +100,7 @@ After loading Pig in local mode in GCP Hadoop, I ran the below grunt commands li
 ```
 	grunt> STORE clean_data INTO 'hdfs://cluster-0489-nikhil-m/FinalCleanedData' USING PigStorage(',');	
  ```
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Table_Load.PNG)
 ## 4. Database and Table Creation with Hive:
 Hive is closely integrated with Hadoop and is available as an add-on in GCP Hadoop. Hive allows us to read, write and manage large amounts of data using HQL or Hive-QL which is similar to SQL. By using the below commands I was able to create a database and a table to store the cleaned data from Pig.
 ```
@@ -111,20 +112,24 @@ hive> CREATE TABLE cloudtechdb.top2gpoststb (Id int,PostTypeId int,AcceptedAnswe
 ```
 hive> LOAD DATA INPATH 'hdfs://cluster-0489-nikhil-m/FinalCleanedData' INTO TABLE cloudtechdb.top2gpoststb;
 ```
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Table.PNG)
 ## 5.Querying data for Task 3 with Hive:
 After the cleaned data is loaded into Hive table as above, the below queries are run to get the result to fetch the data.
 (i)	The top 10 posts by score:
 ```
 hive> SELECT Id, Title, Score FROM cloudtechdb.top2gpoststb ORDER BY Score DESC LIMIT 10;
 ```
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_3_1.PNG)
 (ii)	The top 10 users by post score
 ```
 hive> SELECT OwnerUserId AS Owner, SUM(Score) AS Grand_Score FROM cloudtechdb.top2gpoststb GROUP BY  OwnerUserId ORDER BY Grand_Score DESC LIMIT 10;
 ```
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_3_2.PNG)
 (iii)	The number of distinct users, who used the word “cloud” in one of their posts
 ```
 hive> SELECT COUNT(DISTINCT OwnerUserId) AS Owner_Count FROM cloudtechdb.top2gpoststb WHERE (UPPER(Title) LIKE '%CLOUD%' OR UPPER(body) LIKE '%CLOUD%' OR UPPER(Tags) LIKE '%CLOUD%');
  ```
+ ![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_3_3.PNG)
 ## 6. Calculating TF-IDF for Task 4 with Hive:
 
 TF-IDF [b], which stands for term frequency — inverse document frequency and is intended to reflect how relevant a term is in a given document. A set of pre-requisites need to be in place before we can actually get to the task. First of which is to add Hivemall [c][d] as we will be using it to detach each word in the ‘Body’ column. Once I have downloaded the hivemall jar file and the define-all.hive file, I uploaded them using the same navigation Settings > Upload File to upload 2 files into GCP Master Cluster Node. I then ran the below commands to add hivemall to hive and set the source.
@@ -136,6 +141,9 @@ Since the Task 4 asks to Calculate the per-user TF-IDF [h] of the top 10 terms f
 ```
 hive> SELECT A.OwnerUserId ,A.de_word, A.wf_tfidf, A.rank FROM ( SELECT  OwnerUserId ,de_word, wf_tfidf, ROW_NUMBER() over (PARTITION BY OwnerUserId ORDER BY wf_tfidf DESC) as rank FROM cloudtechdb.task4_tfidf_vw ) A  WHERE A.rank <= 10;
 ```   
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_4_7.PNG)
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_4_8.PNG)
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_4_9.PNG)
 
 References:
 
