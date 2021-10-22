@@ -7,9 +7,9 @@ Task 1: Fetch top 200,000 posts from Stack Exchange sorted by View Count.
 Task 2: Extract, Transform and Load the fetched data using MapReduce/Hive/Pig.
 
 Task 3: Fetch the following data using MapReduce/Hive/Pig
-  •	Top 10 Posts by Score
-  •	Top 10 Users by Post Score
-  •	Number of Distinct Users to use the word ‘Cloud’ in one of their posts
+•	Top 10 Posts by Score
+•	Top 10 Users by Post Score
+•	Number of Distinct Users to use the word ‘Cloud’ in one of their posts
 
 Task 4: Calculate the per-user TF-IDF of the top 10 terms for each of the top 10 users.
 
@@ -80,7 +80,7 @@ I created a Master-Worker Cluster in Google Cloud Platform and with the Master N
 ```
 ## 3. Data Cleaning with Pig:
 Pig is available as one of the add-ons in the Hadoop network. I chose Pig to perform data cleaning because it is much simpler to do the aforementioned task without having to write complex Java programs with mapper and reducer classes.
-After loading Pig in local mode in GCP Hadoop, I ran the below grunt commands like LOAD & CSVExcelStorage [a] to load the csv data into local variables and UNION to combine all the data into one variable for easier reference. I then filtered out all the records that didn’t have any OwnerUserId and Id. After cleaning the Title, Body, Tags, OwnerDisplayName, OwnerUserId, ViewCount, Id and Score for unwanted characters, the cleaned data is then loaded into a file in HDFS using PigStorage.
+After loading Pig in local mode in GCP Hadoop, I ran the below grunt commands like LOAD & CSVExcelStorage [a] to load the csv data into local variables and UNION to combine all the data into one variable for easier reference. I then filtered out all the records that didn’t have any OwnerUserId and Id. After cleaning[i] the Title, Body, Tags, OwnerDisplayName, OwnerUserId, ViewCount, Id and Score for unwanted characters, the cleaned data is then loaded into a file in HDFS using PigStorage.
 ```
 	grunt> FirstTierViewResults = LOAD 'hdfs://cluster-0489-nikhil-m/ExtractedData/FirstTierViewResults.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'UNIX', 'SKIP_INPUT_HEADER') AS (Id:int, PostTypeId:int, AcceptedAnswerId:int, ParentId:int, CreationDate:chararray, DeletionDate:chararray, Score:int, ViewCount:int, Body:chararray, OwnerUserId:int, OwnerDisplayName:chararray, LastEditorUserId:int, LastEditorDisplayName:chararray, LastEditDate:chararray, LastActivityDate:chararray, Title:chararray, Tags:chararray, AnswerCount:int, CommentCount:int, FavoriteCount:int, ClosedDate:chararray, CommunityOwnedDate:chararray, ContentLicense:chararray);
 ```
@@ -179,3 +179,6 @@ https://www.sqlservertutorial.net/sql-server-window-functions/sql-server-row_num
 
 [h]TF-IDF Calculation:
 https://github.com/daijyc/hivemall/wiki/TFIDF-calculation
+
+[i] Data Clean using Pig:
+https://pig.apache.org/docs/r0.17.0/basic.html
