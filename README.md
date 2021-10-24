@@ -27,7 +27,9 @@ Steps for Task completion:
 ## 1. Data Extraction from Stack Exchange:
 
 The website uses SQL language to run the desired queries on the available tables. Since the maximum limit a query can fetch on the website is only 50,000 records, I have written multiple queries with different ranges to fetch data with 50,000 records each run and with 4 such iterations I was be able to download the top 200,000 records in csv format with 50,000 records in each csv file. The runtime to rank all the records in the Posts table was too long and would timeout, so it was important to filter out the data first and then rank. I first selected data from Posts table with ViewCount greater than 35,000. It amounted to more than 200,000 records and so I ranked this data using ROW_NUMBER() [g] based on descending ViewCount. From the ranked data, I got the first 50,000 posts using a nested query. Similar approach has been done to next set of queries with the rank ranging from 50,001 to 100,000 and 100,001 to 150,000 and 150,001 to 200,000. A few records have been removed to avoid duplicate records in the data extraction. Fetched data has been downloaded into 4 CSV files.
+
 Below are the set of queries used:
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/StackExchangeQuery.PNG)
 
 ```
 SELECT A.* FROM (SELECT  *
@@ -66,6 +68,10 @@ ORDER BY A.rank ASC;
 ```
 ## 2. Uploading the CSV files to HDFS:
 I created a Master-Worker Cluster in Google Cloud Platform and with the Master Node SSH, I was able to upload the csv files from my local machine to cluster directory using the settings > upload file option on the SSH window. Once the files are uploaded, I used the below commands to run in the CLI to move the files from my cluster to HDFS directory.
+
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/MasterSSH.png)
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/UploadCSV.png)
+
 ```
 --Create a New Directory in hdfs
 	
