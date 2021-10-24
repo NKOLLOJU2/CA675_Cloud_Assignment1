@@ -127,7 +127,7 @@ After the cleaned data is loaded into Hive table as above, the below queries are
 ```
 hive> SELECT Title, Score FROM cloudtechdb.top2gpoststb ORDER BY Score DESC LIMIT 10;
 ```
-![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_3_1.PNG)
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_31.PNG)
 (ii)	The top 10 users by post score
 ```
 hive> SELECT OwnerUserId AS Owner, SUM(Score) AS Grand_Score FROM cloudtechdb.top2gpoststb GROUP BY  OwnerUserId ORDER BY Grand_Score DESC LIMIT 10;
@@ -137,7 +137,7 @@ hive> SELECT OwnerUserId AS Owner, SUM(Score) AS Grand_Score FROM cloudtechdb.to
 ```
 hive> SELECT COUNT(DISTINCT OwnerUserId) AS Owner_Count FROM cloudtechdb.top2gpoststb WHERE (UPPER(Title) LIKE '% CLOUD %' OR UPPER(Body) LIKE '% CLOUD %' OR UPPER(Tags) LIKE '% CLOUD %');
  ```
- ![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_3_3.PNG)
+ ![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_33.PNG)
 ## 6. Calculating TF-IDF for Task 4 with Hive:
 
 TF-IDF [b], which stands for term frequency — inverse document frequency and is intended to reflect how relevant a term is in a given document. A set of pre-requisites need to be in place before we can actually get to the task. First of which is to add Hivemall [c][d] as we will be using it to detach each word in the ‘Body’ column. Once I have downloaded the hivemall jar file and the define-all.hive file, I uploaded them using the same navigation Settings > Upload File to upload 2 files into GCP Master Cluster Node. I then ran the below commands to add hivemall to hive and set the source.
