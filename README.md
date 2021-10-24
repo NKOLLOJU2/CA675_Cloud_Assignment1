@@ -125,7 +125,7 @@ hive> LOAD DATA INPATH 'hdfs://cluster-0489-nikhil-m/FinalCleanedData' INTO TABL
 After the cleaned data is loaded into Hive table as above, the below queries are run to get the result to fetch the data.
 (i)	The top 10 posts by score:
 ```
-hive> SELECT Id, Title, Score FROM cloudtechdb.top2gpoststb ORDER BY Score DESC LIMIT 10;
+hive> SELECT Title, Score FROM cloudtechdb.top2gpoststb ORDER BY Score DESC LIMIT 10;
 ```
 ![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_3_1.PNG)
 (ii)	The top 10 users by post score
@@ -135,7 +135,7 @@ hive> SELECT OwnerUserId AS Owner, SUM(Score) AS Grand_Score FROM cloudtechdb.to
 ![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_3_2.PNG)
 (iii)	The number of distinct users, who used the word “cloud” in one of their posts
 ```
-hive> SELECT COUNT(DISTINCT OwnerUserId) AS Owner_Count FROM cloudtechdb.top2gpoststb WHERE (UPPER(Title) LIKE '%CLOUD%' OR UPPER(body) LIKE '%CLOUD%' OR UPPER(Tags) LIKE '%CLOUD%');
+hive> SELECT COUNT(DISTINCT OwnerUserId) AS Owner_Count FROM cloudtechdb.top2gpoststb WHERE (UPPER(Title) LIKE '% CLOUD %' OR UPPER(Body) LIKE '% CLOUD %' OR UPPER(Tags) LIKE '% CLOUD %');
  ```
  ![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_3_3.PNG)
 ## 6. Calculating TF-IDF for Task 4 with Hive:
