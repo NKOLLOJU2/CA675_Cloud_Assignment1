@@ -27,7 +27,9 @@ Steps for Task completion:
 ## 1. Data Extraction from Stack Exchange:
 
 The website uses SQL language to run the desired queries on the available tables. Since the maximum limit a query can fetch on the website is only 50,000 records, I have written multiple queries with different ranges to fetch data with 50,000 records each run and with 4 such iterations I was be able to download the top 200,000 records in csv format with 50,000 records in each csv file. The runtime to rank all the records in the Posts table was too long and would timeout, so it was important to filter out the data first and then rank. I first selected data from Posts table with ViewCount greater than 35,000. It amounted to more than 200,000 records and so I ranked this data using ROW_NUMBER() [g] based on descending ViewCount. From the ranked data, I got the first 50,000 posts using a nested query. Similar approach has been done to next set of queries with the rank ranging from 50,001 to 100,000 and 100,001 to 150,000 and 150,001 to 200,000. A few records have been removed to avoid duplicate records in the data extraction. Fetched data has been downloaded into 4 CSV files.
+
 Below are the set of queries used:
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/StackExchangeQuery.PNG)
 
 ```
 SELECT A.* FROM (SELECT  *
@@ -66,6 +68,10 @@ ORDER BY A.rank ASC;
 ```
 ## 2. Uploading the CSV files to HDFS:
 I created a Master-Worker Cluster in Google Cloud Platform and with the Master Node SSH, I was able to upload the csv files from my local machine to cluster directory using the settings > upload file option on the SSH window. Once the files are uploaded, I used the below commands to run in the CLI to move the files from my cluster to HDFS directory.
+
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/MasterSSH.png)
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/UploadCSV.png)
+
 ```
 --Create a New Directory in hdfs
 	
@@ -127,7 +133,7 @@ After the cleaned data is loaded into Hive table as above, the below queries are
 ```
 hive> SELECT Title, Score FROM cloudtechdb.top2gpoststb ORDER BY Score DESC LIMIT 10;
 ```
-![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_3_1.PNG)
+![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_31.PNG)
 (ii)	The top 10 users by post score
 ```
 hive> SELECT OwnerUserId AS Owner, SUM(Score) AS Grand_Score FROM cloudtechdb.top2gpoststb GROUP BY  OwnerUserId ORDER BY Grand_Score DESC LIMIT 10;
@@ -137,7 +143,7 @@ hive> SELECT OwnerUserId AS Owner, SUM(Score) AS Grand_Score FROM cloudtechdb.to
 ```
 hive> SELECT COUNT(DISTINCT OwnerUserId) AS Owner_Count FROM cloudtechdb.top2gpoststb WHERE (UPPER(Title) LIKE '% CLOUD %' OR UPPER(Body) LIKE '% CLOUD %' OR UPPER(Tags) LIKE '% CLOUD %');
  ```
- ![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_3_3.PNG)
+ ![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_33.PNG)
 ## 6. Calculating TF-IDF for Task 4 with Hive:
 
 TF-IDF [b], which stands for term frequency — inverse document frequency and is intended to reflect how relevant a term is in a given document. A set of pre-requisites need to be in place before we can actually get to the task. First of which is to add Hivemall [c][d] as we will be using it to detach each word in the ‘Body’ column. Once I have downloaded the hivemall jar file and the define-all.hive file, I uploaded them using the same navigation Settings > Upload File to upload 2 files into GCP Master Cluster Node. I then ran the below commands to add hivemall to hive and set the source.
