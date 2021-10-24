@@ -1,6 +1,6 @@
 --1. 	The top 10 posts by score
 
-	select Id, Title, Score from cloudtechdb.top2gpoststb ORDER BY Score DESC LIMIT 10;
+	select Title, Score from cloudtechdb.top2gpoststb ORDER BY Score DESC LIMIT 10;
 	
 --2.	The top 10 users by post score
 
@@ -8,5 +8,5 @@
 	
 --3. 	The number of distinct users, who used the word “cloud” in one of their posts
 
-	SELECT COUNT(DISTINCT OwnerUserId) AS Owner_Count FROM cloudtechdb.top2gpoststb WHERE (UPPER(Title) LIKE '%CLOUD%' OR UPPER(Body) LIKE '%CLOUD%' OR UPPER(Tags) LIKE '%CLOUD%');
+	SELECT COUNT(DISTINCT OwnerUserId) AS Owner_Count FROM cloudtechdb.top2gpoststb WHERE (UPPER(Title) LIKE '% CLOUD %' OR UPPER(Body) LIKE '% CLOUD %' OR UPPER(Tags) LIKE '% CLOUD %');
 		
