@@ -9,7 +9,7 @@ Task 2: Extract, Transform and Load the fetched data using MapReduce/Hive/Pig.
 Task 3: Fetch the following data using MapReduce/Hive/Pig
 •	Top 10 Posts by Score
 •	Top 10 Users by Post Score
-•	Number of Distinct Users to use the word ‘Cloud’ in one of their posts
+•	Number of Distinct Users to use the whole word ‘Cloud’ in one of their posts
 
 Task 4: Calculate the per-user TF-IDF of the top 10 terms for each of the top 10 users.
 
@@ -136,10 +136,10 @@ hive> SELECT Title, Score FROM cloudtechdb.top2gpoststb ORDER BY Score DESC LIMI
 ![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_31.PNG)
 (ii)	The top 10 users by post score
 ```
-hive> SELECT OwnerUserId AS Owner, SUM(Score) AS Grand_Score FROM cloudtechdb.top2gpoststb GROUP BY  OwnerUserId ORDER BY Grand_Score DESC LIMIT 10;
+SELECT SUM(Score) AS Grand_Post_Score, OwnerUserId AS Owner FROM cloudtechdb.top2gpoststb GROUP BY  OwnerUserId ORDER BY Grand_Post_Score DESC LIMIT 10;
 ```
 ![alt text](https://github.com/NKOLLOJU2/CA675_Cloud_Assignment1/blob/main/Screenshots/Hive_Task_3_2.PNG)
-(iii)	The number of distinct users, who used the word “cloud” in one of their posts
+(iii)	The number of distinct users, who used the whole word “cloud” in one of their posts
 ```
 hive> SELECT COUNT(DISTINCT OwnerUserId) AS Owner_Count FROM cloudtechdb.top2gpoststb WHERE (UPPER(Title) LIKE '% CLOUD %' OR UPPER(Body) LIKE '% CLOUD %' OR UPPER(Tags) LIKE '% CLOUD %');
  ```
