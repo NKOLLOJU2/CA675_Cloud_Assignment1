@@ -8,5 +8,5 @@
 	
 --3. 	The number of distinct users, who used the whole word “ cloud ” in one of their posts
 
-	SELECT COUNT ( DISTINCT OwnerUserId ) AS Owner_Count FROM cloudtechdb.top2gpoststb WHERE (UPPER(Title) LIKE '% CLOUD %' OR UPPER(body) LIKE '% CLOUD %' OR UPPER(Tags) LIKE '% CLOUD %');
+	SELECT COUNT ( DISTINCT OwnerUserId ) AS Owner_Count FROM cloudtechdb.top2gpoststb WHERE (UPPER(Title) LIKE '%CLOUD%' OR UPPER(body) LIKE '%CLOUD%' OR UPPER(Tags) LIKE '%CLOUD%');
 		
